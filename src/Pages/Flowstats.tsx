@@ -26,7 +26,9 @@ const Flowstats = () => {
   return (
     <div className='flowstats'>
       <div className='btx'>
-        <button className='delete'>Delete</button>
+        <Button className='delete' variant='danger'>
+          Delete
+        </Button>
         <Button variant='primary' onClick={() => setShow(true)}>
           Save
         </Button>
