@@ -40,12 +40,14 @@ const Flowstats = () => {
       >
         <Modal.Header closeButton>
           <Modal.Title id='example-custom-modal-styling-title'>
-            Custom Modal Styling
+            Confirmation
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <h1>Are u Sure u want to save ??</h1>
-          <button onClick={saveFlow}>Save</button>
+          <Button variant='primary' onClick={saveFlow}>
+            Save
+          </Button>
         </Modal.Body>
       </Modal>
 
