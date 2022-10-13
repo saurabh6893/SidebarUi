@@ -6,8 +6,8 @@ const Navbar = () => {
   return (
     <header>
       <div className='left'>
-        <h1>
-          Ziply<span>Fiber</span>
+        <h1 style={{ color: 'green', fontFamily: 'Cabin' }}>
+          Ziply <span style={{ color: 'red' }}>Fiber</span>
         </h1>
       </div>
       <div className='right'>
