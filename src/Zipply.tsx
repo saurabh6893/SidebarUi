@@ -1,5 +1,5 @@
 import React, { createContext, useState } from 'react'
-import { BrowserRouter as Router, Link, Route, Routes } from 'react-router-dom'
+import Navbar from './Navbar'
 import Blank from './Pages/Blank'
 import Flowstats from './Pages/Flowstats'
 
@@ -19,17 +19,24 @@ export const ZipContext: React.Context<any> = createContext('')
 
 const Zipply: React.FC<Info> = () => {
   const [text, setText] = useState('newFlow')
-  const [flowbar, setFlowbars] = useState([''])
-
+  const [flowbar, setFlowbars] = useState(['Outage'])
+  const [active, setActive] = useState<boolean>(false)
+  const more = () => {
+    setActive(!active)
+  }
   const addNew = () => {
     if (!flowbar.includes('newFlow')) {
       setFlowbars([...flowbar, text])
     }
   }
+
   return (
-    <ZipContext.Provider value={{ text, setText, flowbar, setFlowbars }}>
-      <Router>
-        <div className='Zipply'>
+    <ZipContext.Provider
+      value={{ text, active, setActive, setText, flowbar, setFlowbars }}
+    >
+      <div className='Zipply'>
+        <Navbar />
+        <div className='mainbody'>
           <div className='sidebar'>
             <button className='add' onClick={addNew}>
               Add New Flow
@@ -37,20 +44,22 @@ const Zipply: React.FC<Info> = () => {
 
             <div className='flows'>
               <div className='flow'>Order</div>
-              <div className='flow'>Outage</div>
               {flowbar.map((flow, index) => (
-                <Link to='/flowstats' className='flow' key={index}>
+                <button
+                  onClick={more}
+                  className='flowB'
+                  key={index}
+                  style={{ color: 'black' }}
+                  disabled={flowbar.length - 1 > index ? true : false}
+                >
                   {flow}
-                </Link>
+                </button>
               ))}
             </div>
           </div>
-          <Routes>
-            <Route path='/flowstats' element={<Flowstats />} />
-            <Route path='/empty' element={<Blank />} />
-          </Routes>
+          <div className='mainbox'>{active ? <Flowstats /> : <Blank />}</div>
         </div>
-      </Router>
+      </div>
     </ZipContext.Provider>
   )
 }

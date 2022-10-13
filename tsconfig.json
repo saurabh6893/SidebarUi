@@ -22,6 +22,6 @@
     "jsx": "react-jsx"
   },
   "include": 
-    ["src/**/*.ts(x)"]
+    ["src/components", "src/custom.d.ts"]
   ,
 }
