@@ -20,7 +20,7 @@ const Zipply: React.FC<Info> = () => {
   const [sideArr, setSideArr] = useState<any>([])
   const [text, setText] = useState<any>('')
   const [active, setActive] = useState<any>(false)
-  const [selected, setSelected] = useState<any>(0)
+  const [selected, setSelected] = useState<any>({})
 
   const Update = (id: any) => {
     setActive(!active)
@@ -36,13 +36,16 @@ const Zipply: React.FC<Info> = () => {
       id: Date.now(),
       title: 'New Flowbox',
     }
-    setSideArr([...sideArr, Flowbox])
+    let a = [...sideArr]
+    a.push(Flowbox)
+    setSideArr(a)
   }
 
   return (
     <ZipContext.Provider
       value={{
         sideArr,
+        selected,
         setSideArr,
         text,
         setText,
@@ -67,7 +70,7 @@ const Zipply: React.FC<Info> = () => {
                 <button
                   className='flow'
                   key={component.id}
-                  onClick={() => Update(component.id)}
+                  onClick={() => Update(component)}
                 >
                   {component.title}
                 </button>

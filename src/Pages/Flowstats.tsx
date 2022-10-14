@@ -8,18 +8,24 @@ const Flowstats = () => {
   const { pushtext, text, setText, selected, setSideArr, sideArr } =
     useContext(ZipContext)
   const [show, setShow] = useState(false)
+  const [alpha, setAlpha] = useState('')
+  console.log(selected)
 
-  const save = (selected: any, text: any) => {
-    let edited = sideArr.map((s: any) => {
-      if (s.id === selected) {
-        s.title = text
-      }
-      return sideArr
+  const save = (text: any) => {
+    let editedObj = {
+      id: selected.id,
+      title: alpha,
+    }
+    console.log(selected, sideArr[0].id, text)
+    let edited = sideArr.map((item) => {
+      return item.id === selected.id ? editedObj : item
     })
     setSideArr(edited)
   }
 
-  const Yes = (e) => {}
+  const Yes = (e) => {
+    setShow(!show)
+  }
 
   return (
     <div className='flowstats'>
@@ -27,9 +33,7 @@ const Flowstats = () => {
         <Button className='delete' variant='danger'>
           Delete
         </Button>
-        <Button variant='primary' onClick={() => save(selected, text)}>
-          Save
-        </Button>
+        <button onClick={() => save(selected)}>Save</button>
       </div>
 
       <Modal
@@ -58,7 +62,7 @@ const Flowstats = () => {
           <input
             type='text'
             placeholder='Enter a name'
-            onChange={(e) => pushtext(e)}
+            onChange={(e) => setAlpha(e.target.value)}
           />
         </div>
       </div>
