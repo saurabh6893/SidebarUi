@@ -21,10 +21,11 @@ const Flowstats = () => {
       return item.id === selected.id ? editedObj : item
     })
     setSideArr(edited)
+    setShow(false)
   }
 
-  const Yes = (e) => {
-    setShow(!show)
+  const Yes = () => {
+    alpha && setShow(true)
   }
 
   return (
@@ -33,7 +34,7 @@ const Flowstats = () => {
         <Button className='delete' variant='danger'>
           Delete
         </Button>
-        <button onClick={() => save(selected)}>Save</button>
+        <button onClick={() => Yes()}>Save</button>
       </div>
 
       <Modal
@@ -49,7 +50,8 @@ const Flowstats = () => {
         </Modal.Header>
         <Modal.Body>
           <h1>Are u Sure u want to save ??</h1>
-          <Button variant='primary' onClick={(e) => Yes(e)}>
+
+          <Button variant='primary' onClick={() => save(selected)}>
             Save
           </Button>
         </Modal.Body>
