@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 
 const Flowstats = () => {
-  const { pushtext, text, setText, selected, setSideArr, sideArr } =
+  const { selected, setSideArr, sideArr, active, setActive } =
     useContext(ZipContext)
   const [show, setShow] = useState(false)
   const [alpha, setAlpha] = useState('')
@@ -16,12 +16,23 @@ const Flowstats = () => {
       id: selected.id,
       title: alpha,
     }
-    console.log(selected, sideArr[0].id, text)
     let edited = sideArr.map((item) => {
       return item.id === selected.id ? editedObj : item
     })
     setSideArr(edited)
     setShow(false)
+    setActive(false)
+  }
+
+  const deletee = (selected: any) => {
+    let edited = sideArr.filter((item: any) => {
+      return item.id !== selected.id && item
+    })
+
+    let a = edited
+    setSideArr(a)
+    setShow(false)
+    setActive(false)
   }
 
   const Yes = () => {
@@ -31,10 +42,16 @@ const Flowstats = () => {
   return (
     <div className='flowstats'>
       <div className='btx'>
-        <Button className='delete' variant='danger'>
+        <Button
+          className='delete'
+          variant='danger'
+          onClick={() => deletee(selected)}
+        >
           Delete
         </Button>
-        <button onClick={() => Yes()}>Save</button>
+        <Button variant='primary' onClick={() => Yes()}>
+          Save
+        </Button>
       </div>
 
       <Modal
