@@ -5,23 +5,21 @@ import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 
 const Flowstats = () => {
-  const { text, setText, flowbar, active, setActive, setFlowbars } =
+  const { pushtext, text, setText, selected, setSideArr, sideArr } =
     useContext(ZipContext)
   const [show, setShow] = useState(false)
 
-  const texton = (e: any) => {
-    setText(e.target.value)
+  const save = (selected: any, text: any) => {
+    let edited = sideArr.map((s: any) => {
+      if (s.id === selected) {
+        s.title = text
+      }
+      return sideArr
+    })
+    setSideArr(edited)
   }
 
-  const saveFlow = () => {
-    if (!flowbar.includes(text)) {
-      flowbar.pop()
-      setFlowbars([...flowbar, text])
-      setActive(!active)
-    }
-
-    console.log(flowbar)
-  }
+  const Yes = (e) => {}
 
   return (
     <div className='flowstats'>
@@ -29,7 +27,7 @@ const Flowstats = () => {
         <Button className='delete' variant='danger'>
           Delete
         </Button>
-        <Button variant='primary' onClick={() => setShow(true)}>
+        <Button variant='primary' onClick={() => save(selected, text)}>
           Save
         </Button>
       </div>
@@ -47,7 +45,7 @@ const Flowstats = () => {
         </Modal.Header>
         <Modal.Body>
           <h1>Are u Sure u want to save ??</h1>
-          <Button variant='primary' onClick={saveFlow}>
+          <Button variant='primary' onClick={(e) => Yes(e)}>
             Save
           </Button>
         </Modal.Body>
@@ -60,7 +58,7 @@ const Flowstats = () => {
           <input
             type='text'
             placeholder='Enter a name'
-            onChange={(e) => texton(e)}
+            onChange={(e) => pushtext(e)}
           />
         </div>
       </div>

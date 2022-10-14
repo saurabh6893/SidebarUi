@@ -133,7 +133,9 @@ header {
   margin: 10%;
   padding: 1%;
 }
-
+.flow {
+  border: 1px solid black;
+}
 /* 
 
 

@@ -6,9 +6,8 @@ import Flowstats from './Pages/Flowstats'
 export type Info = {
   text?: any
   setText?: any
-
-  flowbar?: any
-  setFlowbars?: any
+  sideArr?: any
+  setSideArr?: any
 }
 
 type ContextProp = {
@@ -18,41 +17,59 @@ type ContextProp = {
 export const ZipContext: React.Context<any> = createContext('')
 
 const Zipply: React.FC<Info> = () => {
-  const [text, setText] = useState('newFlow')
-  const [flowbar, setFlowbars] = useState(['Outage'])
-  const [active, setActive] = useState<boolean>(false)
-  const more = () => {
+  const [sideArr, setSideArr] = useState<any>([])
+  const [text, setText] = useState<any>('')
+  const [active, setActive] = useState<any>(false)
+  const [selected, setSelected] = useState<any>(0)
+
+  const Update = (id: any) => {
     setActive(!active)
+    setSelected(id)
+    console.log(id)
   }
-  const addNew = () => {
-    if (!flowbar.includes('newFlow')) {
-      setFlowbars([...flowbar, text])
+  const pushtext = (e: any) => {
+    setText(e.target.value)
+  }
+
+  const addNew = (E: any) => {
+    let Flowbox = {
+      id: Date.now(),
+      title: 'New Flowbox',
     }
+    setSideArr([...sideArr, Flowbox])
   }
 
   return (
     <ZipContext.Provider
-      value={{ text, active, setActive, setText, flowbar, setFlowbars }}
+      value={{
+        sideArr,
+        setSideArr,
+        text,
+        setText,
+        active,
+        setActive,
+        pushtext,
+      }}
     >
       <div className='Zipply'>
         <Navbar />
         <div className='mainbody'>
           <div className='sidebar'>
-            <button className='add' onClick={addNew}>
+            <button className='add' onClick={(e) => addNew(e)}>
               Add New Flow
             </button>
 
             <div className='flows'>
               <div className='flow'>Order</div>
-              {flowbar.map((flow, index) => (
+              <div className='flow'>Outage</div>
+
+              {sideArr.map((component: any) => (
                 <button
-                  onClick={more}
-                  className='flowB'
-                  key={index}
-                  style={{ color: 'black' }}
-                  disabled={flowbar.length - 1 > index ? true : false}
+                  className='flow'
+                  key={component.id}
+                  onClick={() => Update(component.id)}
                 >
-                  {flow}
+                  {component.title}
                 </button>
               ))}
             </div>
